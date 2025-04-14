@@ -19,6 +19,8 @@ while x < len(expressao):
     x += 1
 
 if len(pilha) == 0:
+    print(pilha)
     print("OK")
 else:
+    print(pilha)
     print("Erro")

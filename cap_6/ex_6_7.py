@@ -2,6 +2,8 @@
 # verifica se os parênteses foram abertos e fechados na ordem correta
 
 stack: list = []
+# palavra: list = []
+palavra: str = ""
 while True:
     entrada: str = input('Digite "(", ")", (0 para sair): ')
 
@@ -9,3 +11,18 @@ while True:
         break
 
     stack.append(entrada)
+
+if len(stack) % 2 == 0:
+    while len(stack) != 0:
+        if stack[0] == "(":
+            palavra += stack[0]
+            stack.pop(0)
+
+        if stack[-1] == ")":
+            palavra += stack[-1]
+            stack.pop(-1)
+
+if len(palavra) != 0:
+    print(f"{palavra}  OK")
+else:
+    print(f"{stack}   ERRO")
