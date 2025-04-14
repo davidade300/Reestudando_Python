@@ -2,8 +2,9 @@
 # verifica se os parênteses foram abertos e fechados na ordem correta
 
 stack: list = []
-# palavra: list = []
-palavra: str = ""
+palavra: list = []
+
+
 while True:
     entrada: str = input('Digite "(", ")", (0 para sair): ')
 
