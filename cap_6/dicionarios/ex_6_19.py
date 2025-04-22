@@ -7,25 +7,36 @@ estoque: dict = {
     "feijao": [100, 1.50],
 }
 
-venda: list[list] = [["tomate", 5], ["batata", 10], ["alface", 5]]
-total: int = 0
+total: float = 0
+custo: float = 0
 
-print("Vendas:\n")
+while True:
+    produto: str = input('Digite o nome do produto ("fim" para sair)')
 
-for operacao in venda:
-    produto, quantidade = operacao  # 1
-    # 1: desempacotamento, como operacao é uma lista com 2 elementos, o primeiro
-    # elemento de operacao é atribuido a produto e o segundo a quantidade
-    preco = estoque[produto][1]
-    custo = preco * quantidade
+    if produto == "fim":
+        break
 
-    print(f"{produto:12s}: {quantidade:3d} x {preco:6.2f} = {custo:6.2f}")
+    if produto not in estoque:
+        print(
+            "Produto não disponível, produtos disponíveis: tomate, alface, batata, feijao"
+        )
 
-    estoque[produto][0] -= quantidade
-    total += custo
+    if produto in estoque:
+        quantidade: int = int(input("Digite a quantidade vendida:"))
 
-print(f"Custo total: {total:21.2f}\n")
-print("Estoque:\n")
+        if quantidade <= estoque[produto][0]:
+            estoque[produto][0] -= quantidade
+            total += quantidade * estoque[produto][1]
+            print(
+                f"{produto:12s}: {quantidade:3d} x {estoque[produto][1]:6.2f} = {total:6.2f}"
+            )
+        else:
+            print(
+                f"Quantidade não disponivel, estoque total para {produto} : {estoque[produto][0]}"
+            )
+
+        custo += total
+
 
 for chave, dados in estoque.items():
     print("Descricao: ", chave)
