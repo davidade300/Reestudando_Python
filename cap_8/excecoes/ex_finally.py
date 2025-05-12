@@ -26,3 +26,12 @@ def par_2(n):
         return n % 2
     except Exception:
         raise ValueError("Valor invalido")
+
+
+# da forma acima, além de recebermos o valor do raise, também teremos o stack trace,
+# caso o efeito desejado seja somente a mensagem do raise, devemos fazer o seguinte
+def par_3(n):
+    try:
+        return n % 2
+    except Exception:
+        raise ValueError("Valor invalido") from None
