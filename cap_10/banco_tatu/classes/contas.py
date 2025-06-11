@@ -18,12 +18,19 @@ class Conta:
             print(f"Nome: {cliente.nome}\nTelefone: {cliente.telefone}\n")
 
     def saque(self, valor: float):
-        if self.saldo >= valor:
+        if self.pode_sacar(valor):
             self.saldo -= valor
             self.operacoes.append(["SAQUE", valor])
 
+            return True
+
         if valor > self.saldo:
             print("saldo insuficiente")
+
+            return False
+
+    def pode_sacar(self, valor: float):
+        return self.saldo >= valor
 
     def deposito(self, valor: float):
         self.saldo += valor
@@ -53,3 +60,22 @@ class ContaEspecial(Conta):
         if self.saldo + self.limite >= valor:
             self.saldo -= valor
             self.operacoes.append(["SAQUE", valor])
+
+            return True
+
+        if valor >= self.saldo + self.limite:
+            print("saldo insuficiente")
+
+            return False
+
+    def pode_sacar(self, valor):
+        return self.saldo + self.limite >= valor
+
+    def extrato(self):
+        print(f"EXTRATO CC Nº {self.numero}\n")
+
+        for operacao in self.operacoes:
+            print(f"{operacao[0]:10s} {operacao[1]:10.2f}")
+
+        print(f"\n Limite total para saque: {(self.saldo + self.limite):10.2f}")
+        print(f"\n Saldo: {self.saldo:10.2f}\n")
