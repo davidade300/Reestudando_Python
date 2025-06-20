@@ -1,6 +1,8 @@
+"""https://python.nilo.pro.br/extras/4/capitulo10/agenda_completa/"""
+
 from functools import total_ordering
 
-from lista_unica import ListaUnica
+from banco_tatu.lista_unica import ListaUnica
 
 from .nome import Nome
 
@@ -54,8 +56,6 @@ class Telefones(ListaUnica):
     def __init__(self) -> None:
         super().__init__(Telefone)
 
-    def pesquisa(self, telefone: Telefone): ...  # FIXME:
-
 
 class DadoAgenda:
     def __init__(self, nome: str) -> None:
@@ -78,3 +78,66 @@ class DadoAgenda:
             return None
         else:
             return self.telefones[posicao]
+
+
+class TiposTelefone(ListaUnica):
+    def __init__(self) -> None:
+        super().__init__(Tipotelefone)
+
+
+class Agenda(ListaUnica):
+    def __init__(self) -> None:
+        super().__init__(DadoAgenda)
+        self.tiposTelefone = TiposTelefone()
+
+    def adicionaTipo(self, tipo):
+        self.tiposTelefone.adiciona(Tipotelefone(tipo))
+
+    def pesquisaNome(self, nome):
+        if isinstance(nome, str):
+            nome = Nome(nome)
+
+        for dados in self.lista:
+            if dados.nome == nome:
+                return dados
+
+        else:
+            return None
+
+    def ordena(self) -> None:  # type: ignore
+        super().ordena(lambda dado: str(dado.nome))
+
+
+def valida_faixa_inteiro(pergunta, inicio, fim):
+    while True:
+        try:
+            valor = int(input(pergunta))
+            if inicio <= valor <= fim:
+                return valor
+        except ValueError:
+            print(f"Valor invalido, favor digitar entre {inicio} e {fim}")
+
+
+class Menu:
+    def __init__(self) -> None:
+        self.opcoes = [["sair", None]]
+
+    def adiciona_opcao(self, nome, funcao):
+        self.opcoes.append([nome, funcao])
+
+    def exibe(self):
+        print("====\nMenu\n=====\n")
+        for i, opcao in enumerate(self.opcoes):
+            print(f"[{i} - {opcao[0]}]")
+        print()
+
+    def execute(self):
+        while True:
+            self.exibe()
+            escolha = valida_faixa_inteiro(
+                "Escolha uma opcao: ", 0, len(self.opcoes) - 1
+            )
+
+            if escolha == 0:
+                break
+        self.opcoes[escolha][1]()
