@@ -1,7 +1,8 @@
 from collections import (
-    UserList,  # herda do tipo lista padrão mas expõe a lista interna
+    UserList,
 )
 
+# herda do tipo lista padrão mas expõe a lista interna
 # em self.data, permitindo sobrescrever os metodos
 
 
